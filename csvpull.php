@@ -42,11 +42,6 @@ while ($line !== false) {
     fputcsv($outFile, $line);
   $line = fgetcsv( ${'inFile_' .$i});
 }
-
-
-//$header = "Write some stuff at the top \r\n";
-
-
   
 fclose($inFile);
 
