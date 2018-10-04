@@ -29,6 +29,15 @@ var checkCats = countChecks('category');
     jQuery('#chart_div').prepend('<h5 class="selectWarn clearable">Go ahead make my day.  Choose something.</h5><p class="selectWarn clearable">Choose a category at left and state(s) and year(s) above to begin.</p>'); jQuery('#chart_div > div').remove(); jQuery('input#spreadDL').hide();
 
  }
+
+    jQuery('input.checkAll').click(function() {
+        parentID = jQuery(this).closest('div.collapse').attr('id');
+        console.log(parentID);
+
+      var checked = jQuery(this).prop('checked');
+     jQuery('#' + parentID).find('.col input:checkbox').prop('checked', checked);
+    });
+  
  jQuery('select').change(countChecks);
  
  jQuery('select').change(countChecks);
