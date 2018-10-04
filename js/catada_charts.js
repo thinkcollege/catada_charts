@@ -30,15 +30,22 @@ var checkCats = countChecks('category');
 
  }
  jQuery('select').change(countChecks);
- jQuery('div').accessibleSimpleTooltipAria({
-    simpletooltipText: 'title'
+ 
+ jQuery('select').change(countChecks);
+ jQuery('#accordion label').accessibleSimpleTooltipAria({
+   // simpletooltipText: 'title'
   });
-
+  jQuery("#chartSelector").submit(function(event)
+  {
+    event.preventDefault(); // cancel default behavior
+ 
+ 
+  });
        
  jQuery('#chartRedraw').click(function(){
      var newChart = drawSheetName();
     });
- jQuery('#stateSelect').multiselect({
+/* jQuery('#stateSelect').multiselect({
      enableClickableOptGroups: true,
      allSelectedText: 'All',
      includeSelectAllOption: true
@@ -49,7 +56,7 @@ var checkCats = countChecks('category');
      enableClickableOptGroups: true,
      allSelectedText: 'All',
      includeSelectAllOption: true
-    });
+    }); */
 
     jQuery('input[name="reportChoose"]').click( function(event) {
         
