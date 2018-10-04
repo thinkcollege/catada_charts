@@ -313,7 +313,7 @@ button#chartRedraw {
 	background-color: #1477d5;
 	color: #fff;
 }
-.checkAll { margin-left: 25px; }
+.checkAll { margin: 20px 0 0 25px; }
 /*
 .accordionFloat .card-header,.accordionFloat .card-header .btn {
 	padding:7px 4px;
