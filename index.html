@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+	<meta content="" name="description">
+	<meta content="" name="author">
+	<link href="../../favicon.ico" rel="icon">
+	<title>CATADA Chart Tool</title>	<!--  <link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css">
+			<link href="css/accessible-tooltip.css" rel="stylesheet" type="text/css">
+	-->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300italic,300,400italic" rel="stylesheet" type='text/css'>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Cabin+Condensed" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300" rel="stylesheet">
+	<link href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" rel="stylesheet">
+	<!-- Bootstrap core CSS -->
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"><!-- Custom styles for this template -->
+
+
+	<link href="css/dashboard.css" rel="stylesheet" type="text/css">
+		<script src="https://code.jquery.com/jquery-3.3.1.js">
+	</script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/popper.min.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" type="text/javascript">
+		</script>
+
+	<script src="https://www.gstatic.com/charts/loader.js" type="text/javascript">
+	</script>
+
+	<script src="js/catada_charts.js" type="text/javascript">
+	</script>
+	<!--<script src="js/jquery-accessible-simple-tooltip-aria.js" type="text/javascript">
+	</script>-->
+
+    <style>
+
+    </style>
+
+  </head>
+
+  <body>
+
+ <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1><img src="assets/catada-logo.png" class="img-fluid" /></h1>
+            </div>
+            <div class="col-md-6">
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-flex">
+        <div class="container">
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav nav-fill w-100 ">
+
+                    <li class="nav-item dropdown">
+
+                        <a class="nav-link red dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">DATA <br /><img src="assets/data-icon.png" /></a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Overall Summary Report</a>
+                            <a class="dropdown-item" href="#">Activity Summary Report</a>
+                            <a class="dropdown-item" href="#">Trend Chart</a>
+                            <a class="dropdown-item" href="#">Annual Report Tool (login)</a>
+                            <a class="dropdown-item" href="#">NATADS</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link blue dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">AT IN ACTION<br /><img src="assets/at-icon.png" /></a>
+
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Innovative Program Ideas</a>
+                            <a class="dropdown-item" href="#">Effective State Practices</a>
+                            <a class="dropdown-item" href="#">Stories From the Field</a>
+
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link green dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">RESOURCES<br /><img src="assets/resources-icon.png" /></a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">CATADA Publications</a>
+                            <a class="dropdown-item" href="#">Forms and Materials</a>
+
+
+                        </div>
+
+
+
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dkblue dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">STATE PROGRAM INFO<br /><img src="assets/program-icon.png" /></a>
+
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Select a State</a>
+
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <!-- Page Content -->
+
+
+<div class="container-fluid">
+		<div class="row">
+			<div class="col-12 py-2">
+				<h1>CATADA Charts</h1>
+			</div>
+		</div>
+		<div class="row">
+			<nav class="col-md-3 py-2" id="sidebar">
+				<form action="process_test.php" id="chartSelector" method="post" name="chartSelector">
+					<h4 class="p-2" id="categoryRadios">1. Select AT Activity</h4>
+					<fieldset aria-labelledby="categoryRadios" role="radiogroup">
+						<div id="accordion">
+							<div class="card">
+								<div class="card-header" id="headingOne">
+									<h5 class="mb-0"><button aria-controls="collapseOne" aria-expanded="false" class="btn btn-link collapsed" data-target="#collapseOne" data-toggle="collapse"><i aria-hidden="true" class="fa"></i>Device Demonstrations</button></h5>
+								</div>
+								<div aria-labelledby="headingOne" class="collapse" data-parent="#accordion" id="collapseOne">
+									<div class="card-body">
+										<div>
+											<strong><label for="choose_24"><input id="choose_24" name="reportChoose" tabindex="0" type="radio" value="24">All device demonstration tables (no chart)</label></strong>
+										</div>
+										<div>
+											<label class="js-simple-tooltip" data-simpletooltip-text="device demonstrations by type of assistive technology" for="choose_1"><input id="choose_1" name="reportChoose" tabindex="0" type="radio" value="1">Type of AT</label>
+										</div>
+										<div>
+											<label class="js-simple-tooltip" data-simpletooltip-text="Individuals or entities who participated in device demonstrations, by type of participant" for="choose_2"><input id="choose_2" name="reportChoose" tabindex="0" type="radio" value="2">Participants</label>
+										</div>
+										<div>
+											<label class="js-simple-tooltip" data-simpletooltip-text="satisfaction of customers served by device demonstrations" for="choose_3"><input id="choose_3" name="reportChoose" tabindex="0" type="radio" value="3">Customer Satisfaction</label>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="card">
+								<div class="card-header" id="headingTwo">
+									<h5 class="mb-0"><button aria-controls="collapseTwo" aria-expanded="false" class="btn btn-link collapsed" data-target="#collapseTwo" data-toggle="collapse"><i aria-hidden="true" class="fa"></i>Device loans</button></h5>
+								</div>
+								<div aria-labelledby="headingTwo" class="collapse" data-parent="#accordion" id="collapseTwo">
+									<div class="card-body">
+										<div>
+											<strong><label for="choose_25"><input id="choose_25" name="reportChoose" tabindex="0" type="radio" value="25">All device loan tables (no chart)</label></strong>
+										</div>
+										<div>
+											<label class="js-simple-tooltip" data-simpletooltip-text="primary reason for obtaining a short-term device loan" for="choose_4"><input id="choose_4" name="reportChoose" tabindex="0" type="radio" value="4">Purpose of loans</label>
+										</div>
+										<div>
+											<label class="js-simple-tooltip" data-simpletooltip-text="devices loaned short-term by type of assistive technology" for="choose_5"><input id="choose_5" name="reportChoose" tabindex="0" type="radio" value="5">Type of AT</label>
+										</div>
+										<div>
+											<label class="js-simple-tooltip" data-simpletooltip-text="short-term device loan by type of borrower" for="choose_6"><input id="choose_6" name="reportChoose" tabindex="0" type="radio" value="6">Device borrowers</label>
+										</div>
+										<div>
+											<label class="js-simple-tooltip" data-simpletooltip-text="satisfaction of customers who borrowed devices on a short-term basis" for="choose_7"><input id="choose_7" name="reportChoose" tabindex="0" type="radio" value="7">Customer satisfaction</label>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="card">
+								<div class="card-header" id="headingThree">
+									<h5 class="mb-0"><button aria-controls="collapseThree" aria-expanded="false" class="btn btn-link collapsed" data-target="#collapseThree" data-toggle="collapse"><i aria-hidden="true" class="fa"></i>Device reutilization</button></h5>
+								</div>
+								<div aria-labelledby="headingThree" class="collapse" data-parent="#accordion" id="collapseThree">
+									<div class="card-body">
+										<div>
+											<strong><label for="choose_26"><input id="choose_26" name="reportChoose" tabindex="0" type="radio" value="26">All device reutilization tables (no chart)</label></strong>
+										</div>
+										<h6>Device Exchange</h6>
+										<div>
+											<label class="js-simple-tooltip" data-simpletooltip-text="devices exchanged, by type of assistive technology" for="choose_8"><input id="choose_8" name="reportChoose" tabindex="0" type="radio" value="8">Type of AT</label>
+										</div>
+										<div>
+											<label class="js-simple-tooltip" data-simpletooltip-text="dollar amount exchange program saved recipients, by type of assistive technology" for="choose_9"><input id="choose_9" name="reportChoose" tabindex="0" type="radio" value="9">Savings</label>
+										</div>
+										<h6>Device Refurbishment</h6>
+										<div>
+											<label class="js-simple-tooltip" data-simpletooltip-text=" devices refurbished by type of assistive technology" for="choose_10"><input id="choose_10" name="reportChoose" tabindex="0" type="radio" value="10">Type of AT</label>
+										</div>
+										<div>
+											<label class="js-simple-tooltip" data-simpletooltip-text="dollar amount refurbishing programs saved recipients, by type of assistive technology" for="choose_11"><input id="choose_11" name="reportChoose" tabindex="0" type="radio" value="11">Savings</label>
+										</div>
+										<div>
+											<label class="js-simple-tooltip" data-simpletooltip-text="satisfaction of customers served by all device reutilization activities" for="choose_12"><input id="choose_12" name="reportChoose" tabindex="0" type="radio" value="12">Customer Satisfaction</label>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="card">
+								<div class="card-header" id="headingFour">
+									<h5 class="mb-0"><button aria-controls="collapseFour" aria-expanded="false" class="btn btn-link collapsed" data-target="#collapseFour" data-toggle="collapse"><i aria-hidden="true" class="fa"></i>State Financing Activities</button></h5>
+								</div>
+								<div aria-labelledby="headingFour" class="collapse" data-parent="#accordion" id="collapseFour">
+									<div class="card-body">
+										<div>
+											<label for="choose_27"><strong><input id="choose_27" name="reportChoose" tabindex="0" type="radio" value="27">All financing activities tables (no chart)</strong></label>
+										</div>
+										<h6>Financial Loans</h6>
+										<div>
+											<label class="js-simple-tooltip" data-simpletooltip-text="devices purchased by borrowers using cash loans, by type of assistive technology" for="choose_13"><input id="choose_13" name="reportChoose" tabindex="0" type="radio" value="13">Type of AT</label>
+										</div>
+										<div>
+											<label class="js-simple-tooltip" data-simpletooltip-text="dollar value of loans issued by cash loan programs, by type of assistive technology" for="choose_14"><input id="choose_14" name="reportChoose" tabindex="0" type="radio" value="14">Loan Value</label>
+										</div>
+										<h6>Other Financing</h6>
+										<div>
+											<label class="js-simple-tooltip" data-simpletooltip-text="devices financed by other financing programs that result in the acquisition of assistive technology, by type of AT" for="choose_15"><input id="choose_15" name="reportChoose" tabindex="0" type="radio" value="15">Type of AT</label>
+										</div>
+										<div>
+											<label class="js-simple-tooltip" data-simpletooltip-text="dollar value of AT provided by other financing programs that result in the acquisition of AT, by type of AT" for="choose_16"><input id="choose_16" name="reportChoose" tabindex="0" type="radio" value="16">Dollar Value</label>
+										</div>
+										<div>
+											<h6>Financing that Reduces Cost</h6><label class="js-simple-tooltip" data-simpletooltip-text="devices consumers acquired by other state financing activities that allow consumers to obtain AT for a reduced cost, by type of AT" for="choose_22"><input id="choose_22" name="reportChoose" tabindex="0" type="radio" value="22">Type of AT</label>
+										</div>
+										<div>
+											<label class="js-simple-tooltip" data-simpletooltip-text=" dollar value of savings resulting from other state financing activities that allow consumers to obtain AT for a reduced cost, by type of AT" for="choose_23"><input id="choose_23" name="reportChoose" tabindex="0" type="radio" value="23">Dollar Value</label>
+										</div>
+										<div>
+											<label class="js-simple-tooltip" data-simpletooltip-text="satisfaction of customers served by all state financing activities" for="choose_17"><input id="choose_17" name="reportChoose" tabindex="0" type="radio" value="17">Customer Satisfaction</label>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="card">
+								<div class="card-header" id="headingSix">
+									<h5 class="mb-0"><button aria-controls="collapseSix" aria-expanded="false" class="btn btn-link collapsed" data-target="#collapseSix" data-toggle="collapse"><i aria-hidden="true" class="fa"></i>Training</button></h5>
+								</div>
+								<div aria-labelledby="headingSix" class="collapse" data-parent="#accordion" id="collapseSix">
+									<div class="card-body">
+										<div>
+											<strong><label for="choose_29"><input id="choose_29" name="reportChoose" tabindex="0" type="radio" value="29">All training tables (no chart)</label></strong>
+										</div>
+										<div>
+											<label class="js-simple-tooltip" data-simpletooltip-text="individuals who participated in training, by type of participant" for="choose_20"><input id="choose_20" name="reportChoose" tabindex="0" type="radio" value="20">Participants</label>
+										</div>
+										<div>
+											<label class="js-simple-tooltip" data-simpletooltip-text="training participants by the primary purpose of the training" for="choose_21"><input id="choose_21" name="reportChoose" tabindex="0" type="radio" value="21">Topics</label>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="card">
+								<div class="card-header" id="headingFive">
+									<h5 class="mb-0"><button aria-controls="collapseFive" aria-expanded="false" class="btn btn-link collapsed" data-target="#collapseFive" data-toggle="collapse"><i aria-hidden="true" class="fa"></i>Information and Assistance</button></h5>
+								</div>
+								<div aria-labelledby="headingFive" class="collapse" data-parent="#accordion" id="collapseFive">
+									<div class="card-body">
+										<div>
+											<strong><label class="js-simple-tooltip" data-simpletooltip-text="" for="choose_28"><input id="choose_28" name="reportChoose" tabindex="0" type="radio" value="28">All information &amp; assistance tables (no chart)</label></strong>
+										</div>
+										<div>
+											<label class="js-simple-tooltip" data-simpletooltip-text=" information and assistance about AT products, devices, or services, or selecting such AT, by type of recipient" for="choose_18"><input id="choose_18" name="reportChoose" tabindex="0" type="radio" value="18">Recipients of AT Device/Service Content</label>
+										</div>
+										<div>
+											<label class="js-simple-tooltip" data-simpletooltip-text="information and assistance for obtaining funding or otherwise acquiring AT or policy/practice information about AT, by type of recipient" for="choose_19"><input id="choose_19" name="reportChoose" tabindex="0" type="radio" value="19">Recipients of AT Funding Content</label>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</fieldset>
+					<h4 class="p-2">2. Select State(s)</h4>
+
+						<div id="accordion2">
+							<div class="card">
+								<div class="card-header" id="headingSeven">
+									<h5 class="mb-0"><button aria-controls="collapseSeven" aria-expanded="false" class="btn btn-link collapsed" data-target="#collapseSeven" data-toggle="collapse"><i aria-hidden="true" class="fa"></i> Select State(s)</button></h5>
+								</div>
+								<div aria-labelledby="headingSeven" class="collapse" data-parent="#accordion2" id="collapseSeven">
+									<div class="card-body row">
+
+											<div class="col">
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="AK"> Alaska</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="AL"> Alabama</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="AS"> American Samoa</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="AR"> Arkansas</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="AZ"> Arizona</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="CA"> California</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="CO"> Colorado</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="CT"> Connecticut</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="DC"> District Of Columbia</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="DE"> Delaware</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="FL"> Florida</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="GA"> Georgia</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="GU"> Guam</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="HI"> Hawaii</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="IA"> Iowa</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="ID"> Idaho</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="IL"> Illinois</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="IN"> Indiana</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="KS"> Kansas</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="KY"> Kentucky</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="LA"> Louisiana</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="MA"> Massachusetts</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="MD"> Maryland</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="ME"> Maine</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="MI"> Michigan</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="MN"> Minnesota</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="MO"> Missouri</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="MS"> Mississippi</label>
+												</div>
+											</div>
+											<div class="col">
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="MT"> Montana</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="NC"> North Carolina</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="ND"> North Dakota</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="NE"> Nebraska</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="NH"> New Hampshire</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="NJ"> New Jersey</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="NM"> New Mexico</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="NV"> Nevada</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="NY"> New York</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="OH"> Ohio</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="OK"> Oklahoma</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="OR"> Oregon</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="PA"> Pennsylvania</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="PR"> Puerto Rico</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="RI"> Rhode Island</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="SC"> South Carolina</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="SD"> South Dakota</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="TN"> Tennessee</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="TX"> Texas</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="UT"> Utah</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="VA"> Virginia</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="VI"> Virgin Islands</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="VT"> Vermont</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="WA"> Washington</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="WI"> Wisconsin</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="WV"> West Virginia</label>
+												</div>
+												<div class="checkbox">
+													<label><input class="stateCheck" name="regionStates[]" type="checkbox" value="WY"> Wyoming</label>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						<h4 class="p-2">3. Select Year(s)</h4>
+						<div id="accordion3">
+							<div class="card">
+								<div class="card-header" id="headingEight">
+									<h5 class="mb-0"><button aria-controls="collapseOne" aria-expanded="false" class="btn btn-link collapsed" data-target="#collapseEight" data-toggle="collapse"><i aria-hidden="true" class="fa"></i>Select Year(s)</button></h5>
+								</div>
+
+								<div aria-labelledby="headingEight" class="collapse" data-parent="#accordion3" id="collapseEight">
+									<div class="card-body row">
+
+												<div class="col">
+													<div class="checkbox">
+														 <label class="form-check-label" for="2008"><input class="yearCheck" id="2008" type="checkbox" value=""> 2008</label>
+													</div>
+													<div class="checkbox">
+														<label class="form-check-label" for="2009"><input class="yearCheck" id="2009" type="checkbox" value=""> 2009</label>
+													</div>
+													<div class="checkbox">
+														 <label class="form-check-label" for="2010"><input class="yearCheck" id="2010" type="checkbox" value=""> 2010</label>
+													</div>
+													<div class="checkbox">
+														 <label class="form-check-label" for="2011"><input class="yearCheck" id="2011" type="checkbox" value=""> 2011</label>
+													</div>
+												</div>
+												<div class="col">
+													<div class="checkbox">
+														<label class="form-check-label" for="2012"><input class="yearCheck" id="2012" type="checkbox" value=""> 2012</label>
+													</div>
+													<div class="checkbox">
+														<label class="form-check-label" for="2013"><input class="yearCheck" id="2013" type="checkbox" value=""> 2013</label>
+													</div>
+													<div class="checkbox">
+														<label class="form-check-label" for="2014"><input class="yearCheck" id="2014" type="checkbox" value="2014"> 2014</label>
+													</div>
+												</div>
+												<div class="col">
+													<div class="checkbox">
+														<label class="form-check-label" for="2015"><input class="yearCheck" id="2015" type="checkbox" value="2015"> 2015</label>
+													</div>
+													<div class="checkbox">
+														<label class="form-check-label" for="2016"><input class="yearCheck" id="2016" type="checkbox" value="2016"> 2016</label>
+													</div>
+													<div class="checkbox">
+														<label class="form-check-label" for="2017"><input class="yearCheck" id="2017" type="checkbox" value="2017"> 2017</label>
+													</div>
+												</div>
+											</div>
+
+									</div>
+								</div>
+							</div>
+
+
+						<div id="summYear">
+
+
+							<h3>Select a year for a summary report</h3><label for="sum_2008"><input id="sum_2008" name="summChoose" type="radio" value="2008"> 2008</label><label for="sum_2009"><input id="sum_2009" name="summChoose" type="radio" value="2009"> 2009</label> <label for="sum_2010"><input id="sum_2010" name="summChoose" type="radio" value="2010"> 2010</label> <label for="sum_2011"><input id="sum_2011" name="summChoose" type="radio" value="2011"> 2011</label> <label for="sum_2012"><input id="sum_2012" name="summChoose" type="radio" value="2012"> 2012</label> <label for="sum_2013"><input id="sum_2013" name="summChoose" type="radio" value="2013"> 2013</label> <label for="sum_2014"><input id="sum_2014" name="summChoose" type="radio" value="2014"> 2014</label> <label for="sum_2015"><input id="sum_2015" name="summChoose" type="radio" value="2015"> 2015</label> <label for="sum_2016"><input id="sum_2016" name="summChoose" type="radio" value="2016"> 2016</label> <label for="sum_2017"><input id="sum_2017" name="summChoose" type="radio" value="2017"> 2017</label>
+						</div><br>
+						<br>
+						<button aria-label="Generate chart, tables, and text download for the selected values" class="btn" id="chartRedraw" type="button">Generate</button><br>
+						<button aria-label="Clear form choices" class="float-left" id="clearForm" type="button">Clear the form</button>
+
+				</form>
+			</nav>
+		<!-- <input type="submit" value="Submit"> -->
+		<main class="col-md-9 py-2 content">
+			<div id="bodyDiv">
+				<div id="chart_div"></div>
+				<div class="clearable" id="legend_div"></div>
+				<form action="csvpull.php" id="csvDL" method="post" name="csvDL">
+					<div class="clearable" id="urlInputs"></div>
+					<div class="clearable" id="titleInputs"></div>
+					<div class="clearable" id="sheetnameInputs"></div>
+					<div class="downloadButton">
+						<input aria-label="A tabular representation of the data in the chart above." id="spreadDL" type="submit" value="Download">
+					</div>
+				</form>
+				<div id="summ_accordion">
+					<div class="clearable" id="table_div_0_title"></div>
+					<div class="tablePad clearable" id="table_div_0"></div>
+					<div class="clearable" id="table_div_1_title"></div>
+					<div class="tablePad clearable" id="table_div_1"></div>
+					<div class="clearable" id="table_div_2_title"></div>
+					<div class="tablePad clearable" id="table_div_2"></div>
+					<div class="clearable" id="table_div_3_title"></div>
+					<div class="tablePad clearable" id="table_div_3"></div>
+					<div class="clearable" id="table_div_4_title"></div>
+					<div class="tablePad clearable" id="table_div_4"></div>
+					<div class="clearable" id="table_div_5_title"></div>
+					<div class="tablePad clearable" id="table_div_5"></div>
+					<div class="clearable" id="table_div_6_title"></div>
+					<div class="tablePad clearable" id="table_div_6"></div>
+					<div class="clearable" id="table_div_7_title"></div>
+					<div class="tablePad clearable" id="table_div_7"></div>
+					<div class="clearable" id="table_div_8_title"></div>
+					<div class="tablePad clearable" id="table_div_8"></div>
+					<div class="clearable" id="table_div_9_title"></div>
+					<div class="tablePad clearable" id="table_div_9"></div>
+					<div class="clearable" id="table_div_10_title"></div>
+					<div class="tablePad clearable" id="table_div_10"></div>
+					<div class="clearable" id="table_div_11_title"></div>
+					<div class="tablePad clearable" id="table_div_11"></div>
+					<div class="clearable" id="table_div_12_title"></div>
+					<div class="tablePad clearable" id="table_div_12"></div>
+					<div class="clearable" id="table_div_13_title"></div>
+					<div class="tablePad clearable" id="table_div_13"></div>
+					<div class="clearable" id="table_div_14_title"></div>
+					<div class="tablePad clearable" id="table_div_14"></div>
+					<div class="clearable" id="table_div_15_title"></div>
+					<div class="tablePad clearable" id="table_div_15"></div>
+					<div class="clearable" id="table_div_16_title"></div>
+					<div class="tablePad clearable" id="table_div_16"></div>
+					<div class="clearable" id="table_div_17_title"></div>
+					<div class="tablePad clearable" id="table_div_17"></div>
+					<div class="clearable" id="table_div_18_title"></div>
+					<div class="tablePad clearable" id="table_div_18"></div>
+					<div class="clearable" id="table_div_19_title"></div>
+					<div class="tablePad clearable" id="table_div_19"></div>
+					<div class="clearable" id="table_div_20_title"></div>
+					<div class="tablePad clearable" id="table_div_20"></div>
+					<div class="clearable" id="table_div_21_title"></div>
+					<div class="tablePad clearable" id="table_div_21"></div>
+					<div class="clearable" id="table_div_22_title"></div>
+					<div class="tablePad clearable" id="table_div_22"></div>
+					<div class="clearable" id="table_div_23_title"></div>
+					<div class="tablePad clearable" id="table_div_23"></div>
+				</div>
+			</div>
+		</main>
+	</div>
+		</div>
+
+	<section id="footer">
+
+		<div class="footer-copyright">
+   <div class="container-fluid">
+<div class="row copyright">
+<div class="col-md-3 col-sm-12 col-align col-align--center">
+<p><a href="http://communityinclusion.org"><img alt="ICI/UMASS logo" class="img-responsive" src="assets/combo_logo-200x110.png" /></a></p>
+</div><!--
+        --><div class="col-md-5 col-sm-12 footer-copyright-title col-align col-align--center">
+<p>©2018<strong>&nbsp;<a href="http://communityinclusion.org">Institute for Community Inclusion</a></strong> at the University of Massachusetts Boston.</p>
+</div><!--
+        --><div class="col-md-4 col-sm-12 col-align col-align--center">
+<a href="/about">ABOUT</a> &nbsp; | &nbsp; <a href="/accessibility-statement">ACCESSIBILITY</a> &nbsp; | &nbsp; <a href="/contact">CONTACT</a></div>
+</div>
+</div>
+</div>
+
+
+	</section>
+	<!-- ./Footer -->
+
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+
+	<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+
+	<script src="js/ie10-viewport-bug-workaround.js" type="text/javascript">
+	</script>
+</body>
+</html>
+
+
