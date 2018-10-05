@@ -96,7 +96,7 @@ var checkCats = countChecks('category');
     
 });
 
-
+// checkbox count
 function countChecks(typeCount = null) {
         
         countStates = jQuery('input[name="regionStates[]"]:checked').length;
@@ -107,7 +107,11 @@ function countChecks(typeCount = null) {
         // console.log('count states: ' + countStates + ' count year: ' + countYears);
         return !typeCount ? checkCount : (typeCount == 'state' ? countStates : ( typeCount == 'year' ? countYears :catCount));
 }
+<<<<<<< HEAD
 // counting States and Years 
+=======
+// counting states and years 
+>>>>>>> summary
 function updateSelectCount(checkType) {
     if (checkType == 'year') {
         yeararray1 = getStateYearArray('year');
