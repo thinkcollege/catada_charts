@@ -107,7 +107,7 @@ function countChecks(typeCount = null) {
         // console.log('count states: ' + countStates + ' count year: ' + countYears);
         return !typeCount ? checkCount : (typeCount == 'state' ? countStates : ( typeCount == 'year' ? countYears :catCount));
 }
-// counting states and years
+// counting States and Years 
 function updateSelectCount(checkType) {
     if (checkType == 'year') {
         yeararray1 = getStateYearArray('year');
