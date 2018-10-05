@@ -97,7 +97,6 @@ var checkCats = countChecks('category');
 });
 
 
-
 function countChecks(typeCount = null) {
         
         countStates = jQuery('input[name="regionStates[]"]:checked').length;
