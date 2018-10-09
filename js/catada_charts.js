@@ -20,11 +20,11 @@ var countYears = null;
 var countCats = null;
 
 jQuery( document ).ready(function() {
-var summaryCheck = summCheck = summReportChecked();
+    var summaryCheck = summCheck = summReportChecked();
  // var updateSelections = readSelections();
-var checkState = countChecks('state'); 
-var checkYears = countChecks('year'); 
-var checkCats = countChecks('category');
+    var checkState = countChecks('state'); 
+    var checkYears = countChecks('year'); 
+    var checkCats = countChecks('category');
  if (countChecks('state') == 0 && countChecks('year') == 0 && countChecks('category') == 0) { jQuery('.selectWarn').remove();
     jQuery('#chart_div').prepend('<h5 class="selectWarn clearable">Go ahead make my day.  Choose something.</h5><p class="selectWarn clearable">Choose a category at left and state(s) and year(s) above to begin.</p>'); jQuery('#chart_div > div').remove(); jQuery('input#spreadDL').hide();
 
@@ -32,7 +32,7 @@ var checkCats = countChecks('category');
 
     jQuery('input.checkAll').click(function() {
         parentID = jQuery(this).closest('div.collapse').attr('id');
-        console.log(parentID);
+        // console.log(parentID);
 
       var checked = jQuery(this).prop('checked');
      jQuery('#' + parentID).find('.col input:checkbox').prop('checked', checked);
@@ -56,19 +56,6 @@ var checkCats = countChecks('category');
  jQuery('#chartRedraw').click(function(){
      var newChart = drawSheetName();
     });
-/* jQuery('#stateSelect').multiselect({
-     enableClickableOptGroups: true,
-     allSelectedText: 'All',
-     includeSelectAllOption: true
-    });
-    
-    
- jQuery('#yearSelect').multiselect({
-     enableClickableOptGroups: true,
-     allSelectedText: 'All',
-     includeSelectAllOption: true
-    }); */
-
     jQuery('input[name="reportChoose"]').click( function(event) {
         
         checkit = summReportChecked();
@@ -92,9 +79,29 @@ var checkCats = countChecks('category');
     });
     
     if (checkState != 0 && checkYears != 0 && checkCats != 0) google.charts.setOnLoadCallback(drawSheetName);
+    var reportType = getUrlParameter('report');
+    console.log(reportType);
+    // end of document.ready functions
     
-    
+
+
+
 });
+
+function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+}
 
 // checkbox count
 function countChecks(typeCount = null) {
@@ -235,7 +242,6 @@ function drawSheetName() {
     }
     // yrsSelectText = "Selected: (" + countChecks('year') + ") " + yrsSelect;
     // jQuery('#yearCountText').append(yrsSelectText);
-    
     
     sheetName = [];
     chartURL = 'https://docs.google.com/spreadsheets/d/1Zutzmq6IFxyHqOpwwjKqUeRhPt8WxY3a5TpvYdQYYf8';
