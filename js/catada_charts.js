@@ -80,7 +80,7 @@ jQuery( document ).ready(function() {
     
     if (checkState != 0 && checkYears != 0 && checkCats != 0) google.charts.setOnLoadCallback(drawSheetName);
     var reportType = getUrlString('report');
-   // console.log(reportType);
+   console.log(reportType);
     // end of document.ready functions
 
 });
@@ -116,8 +116,8 @@ function updateSelectCount(checkType) {
     if (checkType == 'year') {
         yeararray1 = getStateYearArray('year');
         if(yeararray1.length < 1) return;
-        var years1 = jQuery('input[name="reportChoose"]:checked').val() == '31' ? jQuery('input[name="summChoose"]:checked').val() : yeararray1;
-        yearstext = jQuery('input[name="reportChoose"]:checked').val() != '31' ?  yeararray1.length < 1 ? '2012' : yeararray1.join(', ') : years1;
+        var years1 = summReportChecked() ? jQuery('input[name="summChoose"]:checked').val() : yeararray1;
+        yearstext = !summReportChecked() ?  yeararray1.length < 1 ? '2012' : yeararray1.join(', ') : years1;
         jQuery('#yearCountText').empty();
         var yrsSelect = yearstext;
         if(yearstext.length > 20) {
@@ -162,16 +162,20 @@ function getStateYearArray(choiceType) {
 
 function summReportChecked() {
      // console.log('It is checked');
+     var summYes = getUrlString('report') ;
     
-     if(jQuery('input[name="reportChoose"]:checked').val() == '31') {
+     if(jQuery('input[name="reportChoose"]:checked').val() == '31' || summYes == 'summary') {
          jQuery('#summYear').show();
          jQuery('#accordion').hide();
          jQuery('#accordion2').hide();
          jQuery('#accordion3').hide();
+         jQuery('#sidebar h4.p-2').hide();
         
        
         jQuery('button.multiselect.dropdown-toggle').prop('disabled',true);
         jQuery('#stateDrop').hide(); jQuery('#yearDrop').hide();
+
+        return true;
         
 
         
@@ -183,7 +187,10 @@ function summReportChecked() {
         jQuery('#accordion').show();
         jQuery('#accordion2').show();
         jQuery('#accordion3').show();
+        jQuery('#sidebar h4.p-2').show();
         jQuery('')
+
+        return false;
            
     }
     
@@ -215,7 +222,7 @@ function legendBuild(legendNum) {
 
 function drawSheetName() {
 
-    if ((countChecks('state') != 0 && countChecks('year') != 0 && jQuery('input[name="reportChoose"]:checked').val() != '31') || ( jQuery('input[name="reportChoose"]:checked').val() == '31' && jQuery('input[name="summChoose"]:checked').val())) {
+    if ((countChecks('state') != 0 && countChecks('year') != 0 && !summReportChecked()) || ( summReportChecked() && jQuery('input[name="summChoose"]:checked').val())) {
 
     tableStringContent = [];
     legendHTML = null;
@@ -227,12 +234,13 @@ function drawSheetName() {
     
     statenames = statearray1.join("' OR D = '");
     statenametext = statearray1.length < 1 ? ' ' : statearray1.join(", ");
-    var years1 = jQuery('input[name="reportChoose"]:checked').val() == '31' ? jQuery('input[name="summChoose"]:checked').val() : yeararray1;
+    var years1 = summReportChecked() ? jQuery('input[name="summChoose"]:checked').val() : yeararray1;
    
-    years = jQuery('input[name="reportChoose"]:checked').val() != '31' ? yeararray1.length < 1 ? '2012' : yeararray1.join(' OR E = ') : years1;
-    yearstext = jQuery('input[name="reportChoose"]:checked').val() != '31' ?  yeararray1.length < 1 ? '2012' : yeararray1.join(', ') : years1;
-    var reportchoice= jQuery('input[name="reportChoose"]:checked').val();
-    reporttitle = jQuery('input[name="reportChoose"]:checked').parent('label').text();
+    years = !summReportChecked() ? yeararray1.length < 1 ? '2012' : yeararray1.join(' OR E = ') : years1;
+    yearstext = !summReportChecked() ?  yeararray1.length < 1 ? '2012' : yeararray1.join(', ') : years1;
+    var reportchoice = !summReportChecked() ? jQuery('input[name="reportChoose"]:checked').val() : '31';
+
+    reporttitle = !summReportChecked() ? jQuery('input[name="reportChoose"]:checked').parent('label').text() : 'Summary Report';
     var statesFilenm = statenametext;
     if(statenametext.length > 14) {
         statesFilenm = statenametext.substring(0,14);
