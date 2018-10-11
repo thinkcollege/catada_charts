@@ -79,26 +79,23 @@ jQuery( document ).ready(function() {
     });
     
     if (checkState != 0 && checkYears != 0 && checkCats != 0) google.charts.setOnLoadCallback(drawSheetName);
-    var reportType = getUrlParameter('report');
-    console.log(reportType);
+    var reportType = getUrlString('report');
+   // console.log(reportType);
     // end of document.ready functions
-    
-
-
 
 });
 
-function getUrlParameter(sParam) {
-    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
+function getUrlString(reportVars) {
+    var reportURL = decodeURIComponent(window.location.search.substring(1)),
+        reportVariables = reportURL.split('&'),
+        reportName,
         i;
 
-    for (i = 0; i < sURLVariables.length; i++) {
-        sParameterName = sURLVariables[i].split('=');
+    for (i = 0; i < reportVariables.length; i++) {
+        reportName = reportVariables[i].split('=');
 
-        if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? true : sParameterName[1];
+        if (reportName[0] === reportVars) {
+            return reportName[1] === undefined ? true : reportName[1];
         }
     }
 }
@@ -168,6 +165,9 @@ function summReportChecked() {
     
      if(jQuery('input[name="reportChoose"]:checked').val() == '31') {
          jQuery('#summYear').show();
+         jQuery('#accordion').hide();
+         jQuery('#accordion2').hide();
+         jQuery('#accordion3').hide();
         
        
         jQuery('button.multiselect.dropdown-toggle').prop('disabled',true);
@@ -180,6 +180,9 @@ function summReportChecked() {
         jQuery('button.multiselect.dropdown-toggle').removeAttr('disabled');
         jQuery('#stateDrop').show(); jQuery('#yearDrop').show();
         jQuery('#summYear').hide();
+        jQuery('#accordion').show();
+        jQuery('#accordion2').show();
+        jQuery('#accordion3').show();
         jQuery('')
            
     }
@@ -826,13 +829,13 @@ function doQuery(q,i,reportHeader,reportchoice) {
     var tableTitleTarget = 'table_div_' + i + '_title';
     if(reportchoice == '31') {
         jQuery('#' + tableTitleTarget).attr('data-target',tableTarget).addClass('card-header clearable').append('<h5><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#' + tableTarget + '" aria-expanded="false" aria-controls="' + tableTarget + '"><strong>' + reportHeader + (reportchoice == '30' ?' in ' + statenametext : '') + ' for ' + yearstext + '</strong></button></h5>' ); 
-        if(!jQuery('#' + tableTarget).hasClass('collapse'))jQuery('#' + tableTarget).addClass('collapse'); jQuery('#' + tableTarget).attr('aria-labelledby',tableTitleTarget).attr('data-parent','#sum_accordion').attr('aria-expanded',false);
+        if(!jQuery('#' + tableTarget).hasClass('collapse'))jQuery('#' + tableTarget).addClass('collapse'); jQuery('#' + tableTarget).attr('aria-labelledby',tableTitleTarget).attr('data-parent','#summ_accordion').attr('aria-expanded',false);
     
     } else if (reportchoice == '30'){
         return;
     } else {
             jQuery('#' + tableTitleTarget).append('<h5><strong>' + reportHeader + ' in ' + statenametext + ' for ' + yearstext + '</strong></h5>');
-            if(jQuery('#' + tableTarget).hasClass('collapse'))jQuery('#' + tableTarget).removeClass('collapse'); jQuery('#' + tableTarget).attr('aria-labelledby',tableTitleTarget).attr('data-parent','#sum_accordion').attr('aria-expanded',true);
+            if(jQuery('#' + tableTarget).hasClass('collapse'))jQuery('#' + tableTarget).removeClass('collapse'); jQuery('#' + tableTarget).attr('aria-labelledby',tableTitleTarget).attr('data-parent','#summ_accordion').attr('aria-expanded',true);
         
         }
     q.send( function(response) {
