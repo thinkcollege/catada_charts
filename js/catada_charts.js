@@ -20,11 +20,11 @@ var countYears = null;
 var countCats = null;
 
 jQuery( document ).ready(function() {
-var summaryCheck = summCheck = summReportChecked();
+    var summaryCheck = summCheck = summReportChecked();
  // var updateSelections = readSelections();
-var checkState = countChecks('state'); 
-var checkYears = countChecks('year'); 
-var checkCats = countChecks('category');
+    var checkState = countChecks('state'); 
+    var checkYears = countChecks('year'); 
+    var checkCats = countChecks('category');
  if (countChecks('state') == 0 && countChecks('year') == 0 && countChecks('category') == 0) { jQuery('.selectWarn').remove();
     jQuery('#chart_div').prepend('<h5 class="selectWarn clearable">Go ahead make my day.  Choose something.</h5><p class="selectWarn clearable">Choose a category at left and state(s) and year(s) above to begin.</p>'); jQuery('#chart_div > div').remove(); jQuery('input#spreadDL').hide();
 
@@ -32,7 +32,7 @@ var checkCats = countChecks('category');
 
     jQuery('input.checkAll').click(function() {
         parentID = jQuery(this).closest('div.collapse').attr('id');
-        console.log(parentID);
+        // console.log(parentID);
 
       var checked = jQuery(this).prop('checked');
      jQuery('#' + parentID).find('.col input:checkbox').prop('checked', checked);
@@ -56,19 +56,6 @@ var checkCats = countChecks('category');
  jQuery('#chartRedraw').click(function(){
      var newChart = drawSheetName();
     });
-/* jQuery('#stateSelect').multiselect({
-     enableClickableOptGroups: true,
-     allSelectedText: 'All',
-     includeSelectAllOption: true
-    });
-    
-    
- jQuery('#yearSelect').multiselect({
-     enableClickableOptGroups: true,
-     allSelectedText: 'All',
-     includeSelectAllOption: true
-    }); */
-
     jQuery('input[name="reportChoose"]').click( function(event) {
         
         checkit = summReportChecked();
@@ -92,9 +79,26 @@ var checkCats = countChecks('category');
     });
     
     if (checkState != 0 && checkYears != 0 && checkCats != 0) google.charts.setOnLoadCallback(drawSheetName);
-    
-    
+    var reportType = getUrlString('report');
+   console.log(reportType);
+    // end of document.ready functions
+
 });
+
+function getUrlString(reportVars) {
+    var reportURL = decodeURIComponent(window.location.search.substring(1)),
+        reportVariables = reportURL.split('&'),
+        reportName,
+        i;
+
+    for (i = 0; i < reportVariables.length; i++) {
+        reportName = reportVariables[i].split('=');
+
+        if (reportName[0] === reportVars) {
+            return reportName[1] === undefined ? true : reportName[1];
+        }
+    }
+}
 
 // checkbox count
 function countChecks(typeCount = null) {
@@ -112,8 +116,8 @@ function updateSelectCount(checkType) {
     if (checkType == 'year') {
         yeararray1 = getStateYearArray('year');
         if(yeararray1.length < 1) return;
-        var years1 = jQuery('input[name="reportChoose"]:checked').val() == '31' ? jQuery('input[name="summChoose"]:checked').val() : yeararray1;
-        yearstext = jQuery('input[name="reportChoose"]:checked').val() != '31' ?  yeararray1.length < 1 ? '2012' : yeararray1.join(', ') : years1;
+        var years1 = summReportChecked() ? jQuery('input[name="summChoose"]:checked').val() : yeararray1;
+        yearstext = !summReportChecked() ?  yeararray1.length < 1 ? '2012' : yeararray1.join(', ') : years1;
         jQuery('#yearCountText').empty();
         var yrsSelect = yearstext;
         if(yearstext.length > 20) {
@@ -158,13 +162,20 @@ function getStateYearArray(choiceType) {
 
 function summReportChecked() {
      // console.log('It is checked');
+     var summYes = getUrlString('report') ;
     
-     if(jQuery('input[name="reportChoose"]:checked').val() == '31') {
+     if(jQuery('input[name="reportChoose"]:checked').val() == '31' || summYes == 'summary') {
          jQuery('#summYear').show();
+         jQuery('#accordion').hide();
+         jQuery('#accordion2').hide();
+         jQuery('#accordion3').hide();
+         jQuery('#sidebar h4.p-2').hide();
         
        
         jQuery('button.multiselect.dropdown-toggle').prop('disabled',true);
         jQuery('#stateDrop').hide(); jQuery('#yearDrop').hide();
+
+        return true;
         
 
         
@@ -173,7 +184,13 @@ function summReportChecked() {
         jQuery('button.multiselect.dropdown-toggle').removeAttr('disabled');
         jQuery('#stateDrop').show(); jQuery('#yearDrop').show();
         jQuery('#summYear').hide();
+        jQuery('#accordion').show();
+        jQuery('#accordion2').show();
+        jQuery('#accordion3').show();
+        jQuery('#sidebar h4.p-2').show();
         jQuery('')
+
+        return false;
            
     }
     
@@ -205,7 +222,7 @@ function legendBuild(legendNum) {
 
 function drawSheetName() {
 
-    if ((countChecks('state') != 0 && countChecks('year') != 0 && jQuery('input[name="reportChoose"]:checked').val() != '31') || ( jQuery('input[name="reportChoose"]:checked').val() == '31' && jQuery('input[name="summChoose"]:checked').val())) {
+    if ((countChecks('state') != 0 && countChecks('year') != 0 && !summReportChecked()) || ( summReportChecked() && jQuery('input[name="summChoose"]:checked').val())) {
 
     tableStringContent = [];
     legendHTML = null;
@@ -217,12 +234,13 @@ function drawSheetName() {
     
     statenames = statearray1.join("' OR D = '");
     statenametext = statearray1.length < 1 ? ' ' : statearray1.join(", ");
-    var years1 = jQuery('input[name="reportChoose"]:checked').val() == '31' ? jQuery('input[name="summChoose"]:checked').val() : yeararray1;
+    var years1 = summReportChecked() ? jQuery('input[name="summChoose"]:checked').val() : yeararray1;
    
-    years = jQuery('input[name="reportChoose"]:checked').val() != '31' ? yeararray1.length < 1 ? '2012' : yeararray1.join(' OR E = ') : years1;
-    yearstext = jQuery('input[name="reportChoose"]:checked').val() != '31' ?  yeararray1.length < 1 ? '2012' : yeararray1.join(', ') : years1;
-    var reportchoice= jQuery('input[name="reportChoose"]:checked').val();
-    reporttitle = jQuery('input[name="reportChoose"]:checked').parent('label').text();
+    years = !summReportChecked() ? yeararray1.length < 1 ? '2012' : yeararray1.join(' OR E = ') : years1;
+    yearstext = !summReportChecked() ?  yeararray1.length < 1 ? '2012' : yeararray1.join(', ') : years1;
+    var reportchoice = !summReportChecked() ? jQuery('input[name="reportChoose"]:checked').val() : '31';
+
+    reporttitle = !summReportChecked() ? jQuery('input[name="reportChoose"]:checked').parent('label').text() : 'Summary Report';
     var statesFilenm = statenametext;
     if(statenametext.length > 14) {
         statesFilenm = statenametext.substring(0,14);
@@ -235,7 +253,6 @@ function drawSheetName() {
     }
     // yrsSelectText = "Selected: (" + countChecks('year') + ") " + yrsSelect;
     // jQuery('#yearCountText').append(yrsSelectText);
-    
     
     sheetName = [];
     chartURL = 'https://docs.google.com/spreadsheets/d/1Zutzmq6IFxyHqOpwwjKqUeRhPt8WxY3a5TpvYdQYYf8';
@@ -820,13 +837,13 @@ function doQuery(q,i,reportHeader,reportchoice) {
     var tableTitleTarget = 'table_div_' + i + '_title';
     if(reportchoice == '31') {
         jQuery('#' + tableTitleTarget).attr('data-target',tableTarget).addClass('card-header clearable').append('<h5><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#' + tableTarget + '" aria-expanded="false" aria-controls="' + tableTarget + '"><strong>' + reportHeader + (reportchoice == '30' ?' in ' + statenametext : '') + ' for ' + yearstext + '</strong></button></h5>' ); 
-        if(!jQuery('#' + tableTarget).hasClass('collapse'))jQuery('#' + tableTarget).addClass('collapse'); jQuery('#' + tableTarget).attr('aria-labelledby',tableTitleTarget).attr('data-parent','#sum_accordion').attr('aria-expanded',false);
+        if(!jQuery('#' + tableTarget).hasClass('collapse'))jQuery('#' + tableTarget).addClass('collapse'); jQuery('#' + tableTarget).attr('aria-labelledby',tableTitleTarget).attr('data-parent','#summ_accordion').attr('aria-expanded',false);
     
     } else if (reportchoice == '30'){
         return;
     } else {
             jQuery('#' + tableTitleTarget).append('<h5><strong>' + reportHeader + ' in ' + statenametext + ' for ' + yearstext + '</strong></h5>');
-            if(jQuery('#' + tableTarget).hasClass('collapse'))jQuery('#' + tableTarget).removeClass('collapse'); jQuery('#' + tableTarget).attr('aria-labelledby',tableTitleTarget).attr('data-parent','#sum_accordion').attr('aria-expanded',true);
+            if(jQuery('#' + tableTarget).hasClass('collapse'))jQuery('#' + tableTarget).removeClass('collapse'); jQuery('#' + tableTarget).attr('aria-labelledby',tableTitleTarget).attr('data-parent','#summ_accordion').attr('aria-expanded',true);
         
         }
     q.send( function(response) {
